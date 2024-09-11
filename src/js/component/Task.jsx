@@ -25,8 +25,8 @@ const Task = (props) => {
                         <span 
                             style={{ cursor: 'pointer' }}
                             onClick={() => {
-                                props.onRemove(props.task);
-                            }}> x 
+                                props.onRemove();
+                            }}> x
                         </span>
                     )}
                 </div>
