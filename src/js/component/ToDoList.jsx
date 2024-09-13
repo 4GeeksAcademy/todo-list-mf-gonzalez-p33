@@ -6,8 +6,18 @@ const ToDoList = () => {
     const [taskList, setTaskList] = useState([]);
     const colors = ["#FFCDD2", "#F8BBD0", "#E1BEE7", "#D1C4E9", "#C5CAE9", "#BBDEFB", "#B3E5FC", "#B2EBF2",
          "#B2DFDB", "#C8E6C9", "#DCEDC8", "#F0F4C3", "#FFF9C4", "#FFECB3", "#FFE0B2", "#FFCCBC"];
+         
 
-
+    const createUser = async () => {
+        const urlApi = 'https://playground.4geeks.com/todo/users/mafergonzalez'
+        const resp = await fetch(urlApi);
+        
+        if (! resp.ok) {
+            const response = await fetch ('https://playground.4geeks.com/todo/users/mafergonzalez', {
+                method: 'POST',
+            })
+        }
+    }
 
     const loadTasks = async () => {
         const response = await fetch("https://playground.4geeks.com/todo/users/mafergonzalez");
@@ -33,7 +43,7 @@ const ToDoList = () => {
     }
 
     const deleteTask = async (taskId, indice) => {
-        const response = await fetch(`https://playground.4geeks.com/todo/todos/mafergonzalez/${taskId}`, {
+        const response = await fetch(`https://playground.4geeks.com/todo/todos/${taskId}`, {
             method: "DELETE",
         });
 
@@ -47,17 +57,23 @@ const ToDoList = () => {
     
     const deleteAll = async () => {
         try {
-            const response = await fetch("https://playground.4geeks.com/todo/todos/mafergonzalez", {
-                method: "DELETE"});
-        }
-        catch (error) {
-            console.log (error)
-        }
-    
-    }   
+            const response = await fetch("https://playground.4geeks.com/todo/users/mafergonzalez", {
+                method: 'DELETE'
+            });
+
+
+            if (response.ok) {
+                await createUser(); 
+                setTaskList([])
+            }} 
+
+            catch (error) {
+              console.error(error);}
+    }; 
 
     useEffect(() => {
         loadTasks();
+        createUser ();
     },[])
 
     return (
